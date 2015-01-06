@@ -35,8 +35,24 @@ if (result.Error)
 return result.value;
 ```
 
-Supports actions and awaiting async methods.
+It supports actions and awaiting async methods as well.
 
-### Examples ###
+A try-catch around and awaited method call becomes...
 
-TODO
+```c#
+public async void OnButtonClick()
+{
+	var tryResult = await GetSomethingFromADatabaseAsync().TryAwait();
+
+	if (tryResult.Error)
+	{
+		DisplayErrorMessage();
+		return;
+	}
+
+	Process(tryResult.Value);
+}
+```
+
+It also makes it possible to test certain functions without mocks if you wished to.
+Simply construct and pass a TryResult to a function and assert the results.
